@@ -20,6 +20,8 @@ someFunc = do
         let col = findFiveZeroHash input 8
         let answer = map (\y -> getSixthDigit (input ++ show y)) col 
         putStrLn $ "day5 part a: " ++ answer
+        let answer2 = day5Decrypt input
+        putStrLn $ "day5 part b: " ++ answer2
 
 getHash :: [Char] -> [Char]
 getHash str = do 
