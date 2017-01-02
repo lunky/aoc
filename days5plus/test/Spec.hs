@@ -1,6 +1,8 @@
+{-# OPTIONS_GHC -F -pgmF hspec-discover #-}
 import Test.Hspec
 import Test.QuickCheck
 import Day5Lib
+import Day6Lib
 import qualified Data.List
 
 main :: IO ()
@@ -52,3 +54,4 @@ main = hspec $ do
         let output = "05ace8e3"
 --        day5Decrypt input `shouldBe` output
         pendingWith "takes too long to run, uncomment if neccesary"
+
