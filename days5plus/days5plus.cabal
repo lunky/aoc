@@ -17,9 +17,11 @@ library
   hs-source-dirs:      src
   exposed-modules:     Day5Lib Day6Lib Day7Lib
   build-depends:       base >= 4.7 && < 5
+                       ,split
                        ,cryptohash-md5
                        ,bytestring
                        ,base16-bytestring
+                       ,regex-pcre-builtin
   default-language:    Haskell2010
 
 executable days5plus-exe
