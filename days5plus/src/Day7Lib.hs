@@ -9,6 +9,7 @@ module Day7Lib
 import Text.Regex.PCRE
 import Data.List
 import Data.List.Split
+import AocCommon
 
 working = "working"
 
@@ -30,11 +31,9 @@ isTLS str = do
   let answers = map (\y -> y =~ aBBA :: Bool ) hypernets
   first && (and $ map (==False) answers)
 
-splitOddsAndEvens :: [a] -> ([a], [a])
-splitOddsAndEvens = foldr (\x (ys, zs) -> (x : zs, ys)) ([], [])
 
 parseIpAddress ipAddress = do
-  let (hypernets,supernets) =  splitOddsAndEvens $ splitOneOf "[]" ipAddress
+  let [hypernets,supernets] =  splitOddsAndEvens $ splitOneOf "[]" ipAddress
   (hypernets,supernets) 
 
 isSSL :: String -> Bool
@@ -42,7 +41,6 @@ isSSL str = do
   let (hypernets,supernets) =  parseIpAddress str
   let toFindBABs = foldl (\x y -> (getABAs y)++x  ) [] hypernets
   any (\x -> any (\y -> isInfixOf y x ) toFindBABs ) supernets
-windowed size ls@(x:xs) = take size ls : if size < length ls then windowed size xs else []
 
 getABAs :: String -> [String]
 getABAs str =  do
