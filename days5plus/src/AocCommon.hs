@@ -13,3 +13,6 @@ splitOddsAndEvens = foldr (\x [ys, zs] -> [x : zs, ys]) [[], []]
 
 readNumbers :: String -> [Int]
 readNumbers = map read . words
+
+mapInd :: (a -> Int -> b) -> [a] -> [b]
+mapInd f l = zipWith f l [0..]
