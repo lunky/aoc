@@ -84,34 +84,66 @@ spec = do
       dispatchCommand cmd input `shouldBe` output
       
     it "should take te 3x2 rect and rotating column x=1 by 1" $ do
-      let input = [ "###...............................................",
-                    "###...............................................",
-                    "..................................................",
-                    "..................................................",
-                    ".................................................."
+      let input = [ "###....",
+                    "###....",
+                    "......."
                   ]
       let cmd = "rotate column x=1 by 1"
-      let output = ["#.#...............................................",
-                    "###...............................................",
-                    ".#................................................",
-                    "..................................................",
-                    ".................................................."
+      let output = ["#.#....",
+                    "###....",
+                    ".#....."
                   ]
       dispatchCommand cmd input `shouldBe` output
 
     it "should take te 3x2 rect and rotating column x=1 by 3" $ do
-      let input = [ "###...............................................",
-                    "###...............................................",
-                    "..................................................",
-                    "..................................................",
-                    ".................................................."
+      let input = [ "###....",
+                    "###....",
+                    ".......",
+                    ".......",
+                    "......."
                   ]
       let cmd = "rotate column x=1 by 3"
-      let output = ["#.#...............................................",
-                    "#.#...............................................",
-                    "..................................................",
-                    ".#................................................",
-                    ".#................................................"
+      let output = ["#.#....",
+                    "#.#....",
+                    ".......",
+                    ".#.....",
+                    ".#....."
                   ]
       dispatchCommand cmd input `shouldBe` output
+
+    it "should take te 3x2 rect and rotating row y=2 by 3" $ do
+      let input = [ "###....",
+                    "###....",
+                    "......."
+                  ]
+      let cmd = "rotate row y=1 by 3"
+      let output = ["###....",
+                    "...###.",
+                    "......."
+                  ]
+      dispatchCommand cmd input `shouldBe` output
+
+  describe "Day8 run" $ do --
+    it "should accept multiple commands" $ do
+      let emptyGrid = [replicate 7 '.'| x <- [1..3]]
+      contents <- readFile "day8input.txt"
+      let contents = [  "rect 3x2", 
+                        "rotate column x=1 by 1", 
+                        "rotate row y=0 by 4",
+                        "rotate column x=1 by 1" ] 
+--      let input = lines contents
+      let input = contents
+      let output = foldl (\y grid -> dispatchCommand grid y ) emptyGrid input
+      output `shouldBe` [ ".#..#.#",
+                          "#.#....",
+                          ".#....."
+                        ]
+    it "should read the input and produce a count of #'s" $ do
+      let emptyGrid = [replicate 50 '.'| x <- [1..6]]
+      contents <- readFile "day8input.txt"
+      let input = lines contents
+      let output = foldl (\y grid -> dispatchCommand grid y ) emptyGrid input
+      countRecs output `shouldBe` 128
+      where countRecs = length . filter (=='#') . concat
+
 

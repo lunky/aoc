@@ -25,9 +25,9 @@ applyGridMask grid mask =
 getRect :: [String] -> String -> [String]
 getRect grid size = do
   let [xcord,ycord] = parseRec size
-  let emptyRow = take 50 $ repeat '.'
-  let row = (take xcord $ repeat '#')  ++ (take (50-xcord) $ repeat '.')
-  let mask = take ycord ( repeat row ) ++ (take (6-ycord) $ repeat emptyRow)
+  let emptyRow = take (length $ head grid) $ repeat '.'
+  let row = (take xcord $ repeat '#')  ++ (take ((length emptyRow)-xcord) $ repeat '.')
+  let mask = take ycord ( repeat row ) ++ (take ((length grid)-ycord) $ repeat emptyRow)
   applyGridMask grid mask
   where 
   parseRec :: String -> [Int]
@@ -36,11 +36,14 @@ getRect grid size = do
 rotate :: [String] -> String -> [String]
 rotate grid cmd = do
   let (command, rowOrColumn, coord, howMuch) = parseCommand $ cmd
-
-  transpose $ map (\(idx, y) ->
-                      if idx==coord then (fix y howMuch) else y 
-                  ) (zip [0..] $ transpose grid) 
-  where fix row offset = take (length row) ((take offset $ repeat '.') ++ row)
+  rotate' rowOrColumn grid coord howMuch
+  where
+  rotate' rowOrColumn grid coord howMuch 
+    | rowOrColumn == "column" =  transpose $ rotate' "row" (transpose grid) coord howMuch
+    | rowOrColumn == "row" =  map (\(idx, y) ->
+                                    if idx==coord then (fix y howMuch) else y 
+                                  ) (zip [0..] $ grid) 
+    where fix row offset = drop (length row - offset) row ++ take (length row - offset) row
 
 parseCommand cmd = do
   --e.g. ["rotate","row","y=12230","by","2"]
