@@ -14,10 +14,15 @@ spec = do
       working `shouldBe` "working"
 
   describe "decompress" $ do 
-    it "should decompress to a length of 6" $ do 
+    it "should decompress a string w/o compression" $ do 
       let input = "ADVENT"
       let output = "ADVENT"
       decompress input `shouldBe` output
+
+    it "should decompress to a length of 6" $ do 
+      let input = "ADVENT"
+      let output = 6
+      (length $ decompress input) `shouldBe` output
 
     it "should decompress a 1x5 pattern" $ do 
       let input = "(1x5)B"
@@ -44,15 +49,35 @@ spec = do
       let output = "AA(((((1x5)C"
       decompress input `shouldBe` output
 
+    it "should decompress pattern 2" $ do 
+      let input = "A(1x5)BC"
+      let output = "ABBBBBC" 
+      decompress input `shouldBe` output
+
+    it "should decompress pattern 2 with length" $ do 
+      let input = "A(1x5)BC"
+      let output = 7 
+      (length $ decompress input) `shouldBe` output
+
     it "should decompress pattern 3" $ do 
       let input = "(3x3)XYZ"
       let output = "XYZXYZXYZ"
       decompress input `shouldBe` output
 
+    it "should decompress pattern 3 with length" $ do 
+      let input = "(3x3)XYZ"
+      let output = 9
+      (length $ decompress input) `shouldBe` output
+
     it "should decompress pattern 4" $ do 
       let input = "A(2x2)BCD(2x2)EFG"
       let output = "ABCBCDEFEFG"
       decompress input `shouldBe` output
+
+    it "should decompress pattern 4 with length" $ do 
+      let input = "A(2x2)BCD(2x2)EFG"
+      let output = 11
+      (length $ decompress input) `shouldBe` output
 
     it "should decompress pattern 5" $ do 
       let input = "(6x1)(1x3)A" 
@@ -68,3 +93,11 @@ spec = do
       let input = "X(1x2)**(3x3)ABCY"
       let output = "X***ABCABCABCY"
       decompress input `shouldBe` output
+
+  describe "day9 a answer" $ do
+    it "should produce the correct answer" $ do
+      contents <- readFile "day9input.txt"
+      let input = head $ lines contents
+      let output = 152851
+      ( length $ decompress $ input ) `shouldBe` output
+
