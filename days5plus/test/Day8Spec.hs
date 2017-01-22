@@ -123,7 +123,7 @@ spec = do
                   ]
       dispatchCommand cmd input `shouldBe` output
 
-  describe "Day8 run" $ do --
+  describe "Day8 part a run" $ do --
     it "should accept multiple commands" $ do
       let emptyGrid = [replicate 7 '.'| x <- [1..3]]
       contents <- readFile "day8input.txt"
@@ -143,7 +143,20 @@ spec = do
       contents <- readFile "day8input.txt"
       let input = lines contents
       let output = foldl (\y grid -> dispatchCommand grid y ) emptyGrid input
-      countRecs output `shouldBe` 128
-      where countRecs = length . filter (=='#') . concat
+      (length $ filter (=='#') $ concat output) `shouldBe` 128
+
+  describe "Day8 part a run" $ do --
+    it "should read the input and produce an output message 5x6" $ do
+      let emptyGrid = [replicate 50 '.'| x <- [1..6]]
+      contents <- readFile "day8input.txt"
+      let input = lines contents
+      let output = foldl (\y grid -> dispatchCommand grid y ) emptyGrid input
+      output `shouldBe` 
+            ["####..##...##..###...##..###..#..#.#...#.##...##..",
+             "#....#..#.#..#.#..#.#..#.#..#.#..#.#...##..#.#..#.",
+             "###..#..#.#..#.#..#.#....#..#.####..#.#.#..#.#..#.",
+             "#....#..#.####.###..#.##.###..#..#...#..####.#..#.",
+             "#....#..#.#..#.#.#..#..#.#....#..#...#..#..#.#..#.",
+             "####..##..#..#.#..#..###.#....#..#...#..#..#..##.."]
 
 

@@ -15,9 +15,10 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Day5Lib Day6Lib Day7Lib AocCommon Day8Lib
+  exposed-modules:     Day5Lib Day6Lib Day7Lib AocCommon Day8Lib Day9Lib
   build-depends:       base >= 4.7 && < 5
                        ,split
+                       ,parsec
                        ,cryptohash-md5
                        ,bytestring
                        ,base16-bytestring

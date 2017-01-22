@@ -13,14 +13,14 @@ import Debug.Trace
 working = "working"
 
 
-applyRowMask :: String -> String -> String
-applyRowMask gridRow maskRow = 
-  map (\(gridChar,maskChar) -> 
-    if gridChar=='#' || maskChar=='#' then '#' else  '.' ) (zip gridRow maskRow)
 
 applyGridMask :: [String] -> [String] -> [String]
 applyGridMask grid mask = 
   map (\(gridRow,maskRow) -> (applyRowMask gridRow maskRow) ) (zip grid mask)
+  where applyRowMask :: String -> String -> String
+        applyRowMask gridRow maskRow = 
+          map (\(gridChar,maskChar) -> 
+            if gridChar=='#' || maskChar=='#' then '#' else  '.' ) (zip gridRow maskRow)
 
 getRect :: [String] -> String -> [String]
 getRect grid size = do
