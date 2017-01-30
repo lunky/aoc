@@ -101,3 +101,25 @@ spec = do
       let output = 152851
       ( length $ decompress $ input ) `shouldBe` output
 
+  describe "decompressB" $ do 
+    it "should decompress using 2nd format" $ do
+      let input="X(8x2)(3x3)ABCY"
+      let output="XABCABCABCABCABCABCY"
+      (decompress2 input) `shouldBe` output
+
+    it "should decompress using 2nd format" $ do
+      let input="(27x12)(20x12)(13x14)(7x10)(1x12)A"
+      let output=241920
+      length (decompress2 input) `shouldBe` output
+      
+    it "should decompress using 2nd format" $ do
+      let input="(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN"
+      let output=445
+      length ( decompress2 input) `shouldBe` output
+
+  describe "day9 b answer" $ do
+    it "should produce the correct answer" $ do
+      contents <- readFile "day9input.txt"
+      let input = head $ lines contents
+      let output = 152851
+      ( length $ decompress2 $ input ) `shouldBe` output

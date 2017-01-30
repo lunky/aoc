@@ -2,6 +2,7 @@ module Day9Lib
     (
      working
      ,decompress
+     ,decompress2
     ) where
 import AocCommon
 import Data.List
@@ -25,6 +26,18 @@ compressed = do
   comp <- (count howMany anyChar)
   return $ concat $ take repeatX $ repeat comp
 
+compressed2 :: Parser String
+compressed2 = do 
+  void $  char '('
+  howMany <- num
+  void $ char 'x'
+  repeatX <- num
+  void $  char ')'
+  comp <- (count howMany anyChar)
+  let rest = concat $ take repeatX $ repeat comp
+  return $ decompress2 rest
+  
+
 num :: Parser Int
 num = do
     n <- many1 digit
@@ -32,6 +45,13 @@ num = do
 
 notCompressed :: Parser Char 
 notCompressed =  satisfy (/='(')
+
+decompress2 :: String -> String
+decompress2 str = do
+  let response = regularParse (many1 (compressed2<|>(many1 notCompressed))) str
+  case response of 
+    Left msg -> error $ show msg
+    Right answer ->  concat answer
 
 decompress :: String -> String
 decompress str = do
