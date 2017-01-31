@@ -117,9 +117,10 @@ spec = do
       let output=445
       length ( decompress2 input) `shouldBe` output
 
-  describe "day9 b answer" $ do
-    it "should produce the correct answer" $ do
-      contents <- readFile "day9input.txt"
-      let input = head $ lines contents
-      let output = 152851
-      ( length $ decompress2 $ input ) `shouldBe` output
+--  describe "day9 b answer" $ do
+--    it "should produce the correct answer" $ do
+--      contents <- readFile "day9input.txt"
+--      let input = head $ lines contents
+--      let output = 152851
+--      ( length $ decompress2 $ input ) `shouldBe` output
+
