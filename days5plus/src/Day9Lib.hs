@@ -23,8 +23,8 @@ compressed = do
   void $ char 'x'
   repeatX <- num
   void $  char ')'
-  comp <- (count howMany anyChar)
-  return $ concat $ take repeatX $ repeat comp
+  comp <- count howMany anyChar
+  return $ concat $ replicate repeatX comp
 
 compressed2 :: Parser String
 compressed2 = do 

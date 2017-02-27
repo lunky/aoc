@@ -25,9 +25,9 @@ applyGridMask grid mask =
 getRect :: [String] -> String -> [String]
 getRect grid size = do
   let [xcord,ycord] = parseRec size
-  let emptyRow = take (length $ head grid) $ repeat '.'
-  let row = (take xcord $ repeat '#')  ++ (take ((length emptyRow)-xcord) $ repeat '.')
-  let mask = take ycord ( repeat row ) ++ (take ((length grid)-ycord) $ repeat emptyRow)
+  let emptyRow = replicate (length $ head grid) '.'
+  let row = replicate xcord '#' ++ replicate (length emptyRow - xcord) '.'
+  let mask = take ycord ( repeat row ) ++ (take (length grid-ycord) $ repeat emptyRow)
   applyGridMask grid mask
   where 
   parseRec :: String -> [Int]
